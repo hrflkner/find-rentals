@@ -1,13 +1,13 @@
-import Link from 'next/link'
-import React from 'react'
+import Hero from './Hero'
+import InfoBoxes from './InfoBoxes'
+import Recommended from './Recommended'
 
-type Props = {}
-
-export default function HomePage({}: Props) {
+export default function HomePage() {
   return (
-    <div>
-      <h1 className="text-3xl">Welcome</h1>
-      <Link href="/properties">Show Properties</Link>
-    </div>
+    <>
+      <Hero />
+      <InfoBoxes />
+      <Recommended />
+    </>
   )
 }
