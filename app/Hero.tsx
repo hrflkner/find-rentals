@@ -2,7 +2,7 @@ import PropertySearchForm from './PropertySearchForm'
 
 export default function Hero() {
   return (
-    <section className="bg-blue-900/60 py-32 mb-4">
+    <section className="bg-blue-900/60 py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold text-white sm:text-5xl md:text-6xl">

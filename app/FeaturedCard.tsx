@@ -1,6 +1,5 @@
-import Image from 'next/image'
 import Link from 'next/link'
-import DBPropertyListing from '@/interfaces/DBPropertyListing'
+import Image from 'next/image'
 import {
   FaBed,
   FaBath,
@@ -8,28 +7,26 @@ import {
   FaMoneyBill,
   FaMapMarker,
 } from 'react-icons/fa'
-
+import DBPropertyListing from '@/interfaces/DBPropertyListing'
 type Props = {
   property: DBPropertyListing
 }
 
-export default function PropertyCard({ property }: Props) {
+export default function FeaturedCard({ property }: Props) {
   return (
-    <div className="h-min rounded-xl shadow-md relative bg-gray-800">
-      <div className="relative h-[50%] min-h-48 sm:min-h-80">
-        <Image
-          src={property.images[0]}
-          alt=""
-          className="w-full h-auto rounded-t-xl"
-          fill
-        />
-      </div>
-      <div className="p-4">
-        <div className="text-left md:text-center lg:text-left mb-6">
-          <div className="text-gray-400">{property.type}</div>
-          <h3 className="text-xl font-bold">{property.name}</h3>
-        </div>
-        <h3 className="absolute top-[10px] right-[10px] bg-gray-800 px-4 py-2 rounded-lg text-blue-300 font-bold text-right md:text-center lg:text-right">
+    <div className="bg-gray-800 rounded-xl shadow-md relative flex flex-col md:flex-row">
+      <Image
+        src={property.images[0]}
+        alt="Featured property thumbnail"
+        width={0}
+        height={0}
+        sizes="100vw"
+        className="object-cover rounded-t-xl md:rounded-tr-none md:rounded-l-xl w-full md:w-2/5"
+      />
+      <div className="p-6">
+        <h3 className="text-xl font-bold">{property.name}</h3>
+        <div className="text-gray-300 mb-4">{property.type}</div>
+        <h3 className="absolute top-[10px] left-[10px] bg-white px-4 py-2 rounded-lg text-blue-500 font-bold text-right md:text-center lg:text-right">
           $
           {property.rates.monthly
             ? `${property.rates.monthly}/mo`
@@ -37,18 +34,17 @@ export default function PropertyCard({ property }: Props) {
             ? `${property.rates.weekly}/wk`
             : `${property.rates.nightly}/nt`}
         </h3>
-
-        <div className="flex justify-center gap-4 text-gray-400 mb-4">
+        <div className="flex justify-center gap-4 text-gray-300 mb-4">
           <p>
-            <FaBed className="inline mr-2" /> {property.beds}{' '}
+            <FaBed className="inline-block mr-2" /> {property.beds}{' '}
             <span className="md:hidden lg:inline">Beds</span>
           </p>
           <p>
-            <FaBath className="inline mr-2" /> {property.baths}{' '}
+            <FaBath className="inline-block mr-2" /> {property.baths}{' '}
             <span className="md:hidden lg:inline">Baths</span>
           </p>
           <p>
-            <FaRulerCombined className="inline mr-2" />
+            <FaRulerCombined className="inline-block mr-2" />
             {property.square_feet}{' '}
             <span className="md:hidden lg:inline">sqft</span>
           </p>
@@ -72,18 +68,18 @@ export default function PropertyCard({ property }: Props) {
           )}
         </div>
 
-        <div className="border border-gray-100 mb-5"></div>
+        <div className="border border-gray-500 mb-5"></div>
 
-        <div className="flex flex-col lg:flex-row justify-between mb-4">
+        <div className="flex flex-col lg:flex-row justify-between">
           <div className="flex align-middle gap-2 mb-4 lg:mb-0">
-            <FaMapMarker className="text-orange-600 mt-1" />
-            <span className="text-orange-600 font-medium">
-              {property.location.city}, {property.location.state}
+            <FaMapMarker className="mt-1 text-large text-orange-700" />
+            <span className="text-orange-700">
+              {property.location.city}, {property.location.state}{' '}
             </span>
           </div>
           <Link
             href={`/properties/${property._id}`}
-            className="h-[36px] bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-lg text-center text-sm"
+            className="h-[36px] bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center text-sm"
           >
             Details
           </Link>
