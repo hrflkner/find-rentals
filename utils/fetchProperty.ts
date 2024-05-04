@@ -4,7 +4,7 @@ export default async function fetchProperty(id: string) {
   try {
     // Handle when domain is unavailable from prod env
     if (!apiDomain) {
-      return null
+      return []
     }
     const res = await fetch(`${apiDomain}/properties/${id}`)
 
