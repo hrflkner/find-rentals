@@ -1,6 +1,5 @@
 export default interface PropertyListing {
-  _id: string
-  owner: string
+  owner?: string
   name: string
   type: string
   description: string
@@ -10,9 +9,9 @@ export default interface PropertyListing {
     state: string
     zipcode: string
   }
-  beds: number
-  baths: number
-  square_feet: number
+  beds?: number
+  baths?: number
+  square_feet?: number
   amenities: string[]
   rates: {
     nightly?: number
@@ -24,8 +23,5 @@ export default interface PropertyListing {
     email: string
     phone: string
   }
-  images: string[]
-  isFeatured: boolean
-  createdAt: string
-  updatedAt: string
+  images: (string | File)[]
 }
