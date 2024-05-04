@@ -4,8 +4,8 @@ import DBPropertyListing from '@/interfaces/DBPropertyListing'
 import fetchProperties from '@/utils/fetchProperties'
 
 export default async function Recommended() {
-  const properties: DBPropertyListing[] = await fetchProperties()
-  const recentProperties = properties
+  const data = await fetchProperties()
+  const recentProperties: DBPropertyListing[] = data.properties
     .sort(() => Math.random() - Math.random())
     .slice(0, 3)
 

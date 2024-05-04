@@ -2,15 +2,31 @@ import connectDB from '@/config/database'
 import Property from '@/models/Property'
 import { getSessionUser } from '@/utils/getSessionUser'
 import cloudinary from '@/config/cloudinary'
+import { NextRequest } from 'next/server'
 
 // GET /api/properties
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
     await connectDB()
 
-    const properties = await Property.find({})
+    const page = parseInt(request.nextUrl.searchParams.get('page') || '1')
+    const pageSize = parseInt(
+      request.nextUrl.searchParams.get('pageSize') || '3'
+    )
 
-    return new Response(JSON.stringify(properties), {
+    const propertiesToSkip = (page - 1) * pageSize
+
+    const propertyCount = await Property.countDocuments({})
+    const properties = await Property.find({})
+      .skip(propertiesToSkip)
+      .limit(pageSize)
+
+    const result = {
+      propertyCount,
+      properties,
+    }
+
+    return new Response(JSON.stringify(result), {
       status: 200,
     })
   } catch (error) {
