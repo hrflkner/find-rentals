@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { DBMessage } from '@/interfaces/DBMessage'
 import { useMessageContext } from '@/context/MessageContext'

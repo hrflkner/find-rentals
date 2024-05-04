@@ -33,14 +33,14 @@ export default function Messages({}: Props) {
   return loading ? (
     <Spinner loading={loading} />
   ) : (
-    <section className="bg-black">
-      <div className="container m-auto py-24 max-w-6xl">
+    <section className="mx-auto container-xl lg:container bg-black">
+      <div className="pt-10 pb-12">
         <div className="bg-black px-6 py-8 mb-4 m-4 md:m-0">
           <h1 className="text-3xl font-bold mb-4">Your Enquiries</h1>
 
           <div className="space-y-4">
             {messages.length === 0 ? (
-              <p>You don't have any messages.</p>
+              <p>You don{"'"}t have any messages.</p>
             ) : (
               messages.map((message, idx: number) => (
                 <Message key={idx} message={message} />
