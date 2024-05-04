@@ -1,23 +1,39 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import logo from '@/assets/images/logo-white.png'
 import profileDefault from '@/assets/images/profile.png'
 import { FaGoogle } from 'react-icons/fa'
+import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
+import { SyncLoader } from 'react-spinners'
 
 export default function NavBar() {
+  const { data: session, status } = useSession()
+  const profileImage = session?.user?.image
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState<boolean>(false)
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+  const [providers, setProviders] = useState<string[] | null>(null)
 
   const pathname = usePathname()
 
+  useEffect(() => {
+    const setAuthProviders = async () => {
+      const res = await getProviders()
+      if (res) {
+        setProviders(Object.values(res).map((provider) => provider.id))
+      }
+    }
+
+    setAuthProviders()
+  }, [])
+
   return (
-    <nav className="bg-black border-b border-blue-500">
-      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+    <nav className="bg-black">
+      <div className="mx-auto container-xl lg:container">
         <div className="relative flex h-20 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center md:hidden">
             {/* Mobile menu button */}
@@ -61,14 +77,6 @@ export default function NavBar() {
             <div className="hidden md:ml-6 md:block">
               <div className="flex space-x-2">
                 <Link
-                  href="/"
-                  className={`text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 ${
-                    pathname === '/' ? 'bg-black' : ''
-                  }`}
-                >
-                  Home
-                </Link>
-                <Link
                   href="/properties"
                   className={`text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 ${
                     pathname === '/properties' ? 'bg-black' : ''
@@ -76,7 +84,7 @@ export default function NavBar() {
                 >
                   Properties
                 </Link>
-                {isLoggedIn && (
+                {status === 'authenticated' && (
                   <Link
                     href="/properties/add"
                     className={`text-white hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 ${
@@ -90,20 +98,30 @@ export default function NavBar() {
             </div>
           </div>
 
+          {/* Right Side Menu (User Loading) */}
+          {status === 'loading' && <SyncLoader size={8} color="#3b82f6" />}
+
           {/* Right Side Menu (Logged Out) */}
-          {!isLoggedIn && (
+          {status === 'unauthenticated' && (
             <div className="hidden md:block md:ml-6">
               <div className="flex items-center">
-                <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2">
-                  <FaGoogle className="text-white mr-2" />
-                  <span>Login or Register</span>
-                </button>
+                {providers &&
+                  providers.map((providerId, index: number) => (
+                    <button
+                      key={index}
+                      onClick={() => signIn(providerId)}
+                      className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
+                    >
+                      <FaGoogle className="text-white mr-2" />
+                      <span>Login or Register</span>
+                    </button>
+                  ))}
               </div>
             </div>
           )}
 
           {/* Right Side Menu (Logged In) */}
-          {isLoggedIn && (
+          {status === 'authenticated' && (
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
               <Link href="/messages" className="relative group">
                 <button
@@ -145,9 +163,11 @@ export default function NavBar() {
                     <span className="absolute -inset-1.5"></span>
                     <span className="sr-only">Open user menu</span>
                     <Image
-                      className="h-8 w-8 rounded-full"
-                      src={profileDefault}
-                      alt=""
+                      className="h-10 w-10 rounded-full"
+                      src={profileImage || profileDefault}
+                      alt="Profile Image"
+                      width={40}
+                      height={40}
                     />
                   </button>
                 </div>
@@ -168,6 +188,7 @@ export default function NavBar() {
                       role="menuitem"
                       tabIndex={-1}
                       id="user-menu-item-0"
+                      onClick={() => setIsProfileMenuOpen(false)}
                     >
                       Your Profile
                     </Link>
@@ -177,10 +198,15 @@ export default function NavBar() {
                       role="menuitem"
                       tabIndex={-1}
                       id="user-menu-item-2"
+                      onClick={() => setIsProfileMenuOpen(false)}
                     >
                       Saved Properties
                     </Link>
                     <button
+                      onClick={() => {
+                        setIsProfileMenuOpen(false)
+                        signOut()
+                      }}
                       className="block px-4 py-2"
                       role="menuitem"
                       tabIndex={-1}
@@ -216,7 +242,7 @@ export default function NavBar() {
             >
               Properties
             </Link>
-            {isLoggedIn && (
+            {status === 'authenticated' && (
               <Link
                 href="/properties/add"
                 className={`text-white block rounded-md px-3 py-2 text-base font-medium ${
@@ -226,12 +252,18 @@ export default function NavBar() {
                 Add Property
               </Link>
             )}
-            {!isLoggedIn && (
-              <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4">
-                <FaGoogle className="text-white mr-2" />
-                <span>Login or Register</span>
-              </button>
-            )}
+            {status === 'unauthenticated' &&
+              providers &&
+              providers.map((providerId, index: number) => (
+                <button
+                  key={index}
+                  onClick={() => signIn(providerId)}
+                  className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-4"
+                >
+                  <FaGoogle className="text-white mr-2" />
+                  <span>Login or Register</span>
+                </button>
+              ))}
           </div>
         </div>
       )}

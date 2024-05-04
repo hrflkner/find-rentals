@@ -2,6 +2,7 @@ import React from 'react'
 import '@/assets/styles/globals.css'
 import NavBar from './NavBar'
 import Footer from './Footer'
+import AuthProvider from './AuthProvider'
 
 type Props = {
   children: React.ReactNode
@@ -15,12 +16,14 @@ export const metadata = {
 
 export default function layout({ children }: Props) {
   return (
+    <AuthProvider>
     <html lang="en">
-      <body className="bg-black text-white pb-28">
+        <body className="relative min-h-[100svh] pb-28 bg-black text-white">
         <NavBar />
         <main>{children}</main>
         <Footer />
       </body>
     </html>
+    </AuthProvider>
   )
 }
