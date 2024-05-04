@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import PropertyListing from '@/interfaces/PropertyListing'
+import DBPropertyListing from '@/interfaces/DBPropertyListing'
 import {
   FaBed,
   FaBath,
@@ -10,20 +10,20 @@ import {
 } from 'react-icons/fa'
 
 type Props = {
-  property: PropertyListing
+  property: DBPropertyListing
 }
 
 export default function PropertyCard({ property }: Props) {
   return (
-    <div className="rounded-xl shadow-md relative bg-gray-800">
-      <Image
-        src={`/images/properties/${property.images[0]}`}
-        alt=""
-        height={0}
-        width={0}
-        sizes="100vw"
-        className="w-full h-auto rounded-t-xl"
-      />
+    <div className="h-min rounded-xl shadow-md relative bg-gray-800">
+      <div className="relative h-[50%] min-h-48 sm:min-h-80">
+        <Image
+          src={property.images[0]}
+          alt=""
+          className="w-full h-auto rounded-t-xl"
+          fill
+        />
+      </div>
       <div className="p-4">
         <div className="text-left md:text-center lg:text-left mb-6">
           <div className="text-gray-400">{property.type}</div>
@@ -77,7 +77,9 @@ export default function PropertyCard({ property }: Props) {
         <div className="flex flex-col lg:flex-row justify-between mb-4">
           <div className="flex align-middle gap-2 mb-4 lg:mb-0">
             <FaMapMarker className="text-orange-600 mt-1" />
-            <span className="text-orange-600 font-medium"> Boston MA </span>
+            <span className="text-orange-600 font-medium">
+              {property.location.city}, {property.location.state}
+            </span>
           </div>
           <Link
             href={`properties/${property._id}`}

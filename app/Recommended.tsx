@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import PropertyCard from '@/components/PropertyCard'
-import PropertyListing from '@/interfaces/PropertyListing'
+import DBPropertyListing from '@/interfaces/DBPropertyListing'
 import fetchProperties from '@/utils/fetchProperties'
 
 export default async function Recommended() {
-  const properties: PropertyListing[] = await fetchProperties()
+  const properties: DBPropertyListing[] = await fetchProperties()
   const recentProperties = properties
     .sort(() => Math.random() - Math.random())
     .slice(0, 3)
