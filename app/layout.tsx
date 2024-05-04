@@ -1,10 +1,11 @@
 import React from 'react'
 import '@/assets/styles/globals.css'
+import 'react-toastify/dist/ReactToastify.css'
+import 'photoswipe/dist/photoswipe.css'
 import NavBar from './NavBar'
 import Footer from './Footer'
 import AuthProvider from './AuthProvider'
 import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 import { MessageProvider } from '@/context/MessageContext'
 
 type Props = {
