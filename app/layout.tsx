@@ -5,6 +5,7 @@ import Footer from './Footer'
 import AuthProvider from './AuthProvider'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { MessageProvider } from '@/context/MessageContext'
 
 type Props = {
   children: React.ReactNode
@@ -19,14 +20,16 @@ export const metadata = {
 export default function layout({ children }: Props) {
   return (
     <AuthProvider>
-      <html lang="en">
-        <body className="relative min-h-[100svh] pb-28 bg-black text-white">
-          <NavBar />
-          <main>{children}</main>
-          <Footer />
-          <ToastContainer theme="dark" />
-        </body>
-      </html>
+      <MessageProvider>
+        <html lang="en">
+          <body className="relative min-h-[100svh] pb-28 bg-black text-white">
+            <NavBar />
+            <main>{children}</main>
+            <Footer />
+            <ToastContainer theme="dark" />
+          </body>
+        </html>
+      </MessageProvider>
     </AuthProvider>
   )
 }
