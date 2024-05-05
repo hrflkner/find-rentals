@@ -192,14 +192,14 @@ export default function NavBar() {
                       Your Profile
                     </Link>
                     <Link
-                      href="/properties/saved"
+                      href="/properties/bookmarks"
                       className="block px-4 py-2"
                       role="menuitem"
                       tabIndex={-1}
                       id="user-menu-item-2"
                       onClick={() => setIsProfileMenuOpen(false)}
                     >
-                      Saved Properties
+                      Bookmarked Properties
                     </Link>
                     <button
                       onClick={() => {
