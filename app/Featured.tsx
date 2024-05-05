@@ -11,10 +11,10 @@ export default async function Featured({}: Props) {
   })
   return (
     featuredProperties.length > 0 && (
-      <section className="bg-gray-900 px-4 pt-10 pb-20">
+      <section className="bg-black px-4 pt-20 pb-40">
         <div className="container-xl lg:container m-auto">
           <h2 className="text-3xl font-bold text-blue-500 mb-6 text-center">
-            Featured Properties
+            Featured
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {featuredProperties.map((property, idx: number) => (

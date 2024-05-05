@@ -26,7 +26,7 @@ export default function FeaturedCard({ property }: Props) {
       <div className="p-6">
         <h3 className="text-xl font-bold">{property.name}</h3>
         <div className="text-gray-300 mb-4">{property.type}</div>
-        <h3 className="absolute top-[10px] left-[10px] bg-white px-4 py-2 rounded-lg text-blue-500 font-bold text-right md:text-center lg:text-right">
+        <h3 className="absolute top-[10px] left-[10px] bg-gray-800 px-4 py-2 rounded-lg text-blue-300 font-bold text-right md:text-center lg:text-right">
           $
           {property.rates.monthly
             ? `${property.rates.monthly}/mo`

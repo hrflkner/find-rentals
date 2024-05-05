@@ -7,9 +7,9 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <InfoBoxes />
       <Featured />
       <Recommended />
+      <InfoBoxes />
     </>
   )
 }
