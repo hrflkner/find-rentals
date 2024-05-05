@@ -27,7 +27,7 @@ export default function BookmarkButton({ property }: Props) {
 
     const checkBookmarkStatus = async () => {
       try {
-        const res = await fetch('/api/bookmarks', {
+        const res = await fetch('/api/bookmarks/check', {
           method: 'POST',
           headers: {
             'Content-Type': 'applications/json',

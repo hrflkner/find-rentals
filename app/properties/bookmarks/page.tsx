@@ -6,7 +6,7 @@ import DBPropertyListing from '@/interfaces/DBPropertyListing'
 import { toast } from 'react-toastify'
 
 export default function BookmarkedPropertiesPage() {
-  const [properties, setProperties] = useState<DBPropertyListing[]>([])
+  const [properties, setProperties] = useState<DBPropertyListing[]>()
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function BookmarkedPropertiesPage() {
     }
   }, [])
 
-  return loading ? (
+  return loading || !properties ? (
     <Spinner loading={loading} />
   ) : (
     <section className="container-xl lg:container mx-auto py-6">
