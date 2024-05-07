@@ -5,7 +5,7 @@ export default function Hero() {
   return (
     <section className="relative bg-black py-20 md:py-48 lg:py-96 w-full max-h-[60svh] h-[50svh] lg:max-h-none md:h-auto aspect-auto overflow-hidden">
       <Image
-        className="absolute top-0 min-w-max w-auto lg:w-full max-h-[85svh] mx-auto"
+        className="absolute top-0 min-w-max w-auto lg:w-full max-h-[50svh] sm:max-h-[85svh] mx-auto object-cover"
         src="/images/sunset_suburb.avif"
         alt="Neighborhood at sunset"
         width={3840}
