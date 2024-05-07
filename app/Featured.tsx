@@ -11,7 +11,7 @@ export default async function Featured({}: Props) {
   })
   return (
     featuredProperties.length > 0 && (
-      <section className="bg-black px-4 pt-20 pb-40">
+      <section className="bg-black px-4 pt-10 pb-20">
         <div className="container-xl lg:container m-auto">
           <h2 className="text-3xl font-bold text-blue-500 mb-6 text-center">
             Featured
